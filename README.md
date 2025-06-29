@@ -18,7 +18,11 @@ VentoyDocker is a project that provides a Docker container allowing you to run [
 
 -----
 
-<iframe src="https://334s3m-my.sharepoint.com/personal/kanishk_334s3m_onmicrosoft_com/_layouts/15/embed.aspx?UniqueId=c7e71388-b16c-4688-8a7d-190b97cf913c&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="Screen Recording 2025-06-29 at 11.56.15 PM.mov"></iframe>
+## Demo
+
+[![VentoyDocker Demo](https://img.youtube.com/vi/lMra8McfwAk/0.jpg)](https://www.youtube.com/watch?v=lMra8McfwAk)
+
+-----
 
 ## Getting Started
 
