@@ -14,7 +14,7 @@ VentoyDocker is a project that provides a Docker container allowing you to run [
 
 - **Easy-to-use**: our scripts walk you through the simple use process
 - **Free**: open source software that helps you create bootable USB drives
-- **Enable Mac Support**: Ventoy officially does not support macOS but VentoyDocker enables Ventoy to work on macOS by using Qemu to emulate the USB drive, allowing you to create bootable USB drives from macOS without needing a physical USB drive.
+- **Enable Mac Support**: Ventoy officially does not have the support to run on macOS to create bootable usb device, but VentoyDocker enables Ventoy to work on macOS allowing you to create bootable USB drives using macOS.
 
 -----
 
