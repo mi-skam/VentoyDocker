@@ -3,7 +3,7 @@
 #
 
 <p align="center">
-  <img src="./assets/VentoyDocker.png" alt="VentoyDocker logo">
+  <img src="./assets/VentoyDocker.png" alt="VentoyDocker logo" width="300" />
   <br>
   <strong>Run Ventoy via Docker</strong>
 </p>
@@ -11,9 +11,6 @@
 <!-- markdownlint-enable MD033 -->
 
 VentoyDocker is a project that provides a Docker container allowing you to run [Ventoy](https://www.ventoy.net/) in a Docker environment. 
-
-Ventoy is an open-source tool that allows you to create bootable USB drives for multiple operating systems. This Docker container simplifies the process of using Ventoy by providing a pre-configured environment.
-
 
 - **Easy-to-use**: our scripts walk you through the simple use process
 - **Free**: open source software that helps you create bootable USB drives
