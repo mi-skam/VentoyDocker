@@ -3,12 +3,6 @@
 # Exit immediately if a command exits with a non-zero status
 set -euo pipefail
 
-# check if the script is run as root
-if [[ $EUID -ne 0 ]]; then
-    echo "This script must be run as root. Please use sudo."
-    exit 1
-fi
-
 # User operating system
 OS=$(uname -s)
 
@@ -46,7 +40,7 @@ if ! command -v docker &>/dev/null; then
 fi
 
 # Build the Docker image if it is not already built
-if ! docker images | grep -q ventoy-docker; then
+if ! docker image inspect ventoy-docker:latest &>/dev/null; then
     echo "Docker image 'ventoy-docker' not found. Building the image..."
     docker build -t ventoy-docker .
 fi
