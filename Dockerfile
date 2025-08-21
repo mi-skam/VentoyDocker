@@ -12,11 +12,11 @@ RUN apt update && apt install -y \
 WORKDIR /root
 
 # Download and extract Ventoy
-RUN wget https://github.com/ventoy/Ventoy/releases/download/v1.1.05/ventoy-1.1.05-linux.tar.gz \
-    && tar -xzf ventoy-1.1.05-linux.tar.gz
+RUN wget https://github.com/ventoy/Ventoy/releases/download/v1.1.07/ventoy-1.1.07-linux.tar.gz \
+    && tar -xzf ventoy-1.1.07-linux.tar.gz
 
 # Set Working Directory
 # This is where the Ventoy files are located
-WORKDIR /root/ventoy-1.1.05
+WORKDIR /root/ventoy-1.1.07
 
 CMD ["bash"]
