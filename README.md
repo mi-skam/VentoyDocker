@@ -59,6 +59,7 @@ VentoyDocker is a project that provides a Docker container allowing you to run [
    diskutil list
    ```
    - Output of the Above command is like this:
+
    ```bash
    /dev/disk0 (internal, physical):
    #:                       TYPE NAME                    SIZE       IDENTIFIER
@@ -113,6 +114,7 @@ VentoyDocker is a project that provides a Docker container allowing you to run [
    __Note:__ You can specify the port to expose for VentoyWeb when starting the Ventoy Docker container which is Default to `24680`. To specify custom port apart from `24680` you can use `-p` flag.
 
    - Example:
+
    ```bash
    ./StartVentoy,sh -p 8080
    ```
@@ -158,6 +160,8 @@ _📢 Important Notes:_
 and now you can access the ventoyweb interface on your hostmachine by going to `0.0.0.0:24680` in your browser.
 
 __Note__: You can also specify which port to expose in the host machine; see the docs [here](#installation)
+
+----
 
 ### Contributing via GitHub
 
