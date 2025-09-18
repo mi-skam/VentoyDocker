@@ -51,8 +51,8 @@ VentoyDocker is a project that provides a Docker container allowing you to run [
    ```
 
     - Note: You need to run this command with `sudo` to allow access to the disk image or USB drive.
-    - The `-d` option specifies the disk image or USB drive to use with Ventoy.
-   - Replace `<your-disk-image>` with the path to your disk image file. If you want to use a USB drive, you can specify the device path (e.g., `/dev/sdb`).
+    - The `-d` option specifies the USB drive disk to use with Ventoy.
+   - Replace `<your-disk-image>` with the path to your USB drive disk . If you want to use a USB drive, you can specify the device path (e.g., `/dev/sdb`).
 
    You can check the available disk images by running:
    ```bash
@@ -81,7 +81,11 @@ VentoyDocker is a project that provides a Docker container allowing you to run [
         nbd-client -d <your-nbd-port>
         ```
 
-Now you can easily use Ventoy2Disk script to create bootable USB drives or disk images. For more information on how to use Ventoy2Disk script, refer to the [Ventoy documentation](https://www.ventoy.net/en/doc_start.html).
+Now you can easily use Ventoy scripts to create bootable USB drives or disk images. For more information on how to use Ventoy scripts, refer to the [Ventoy documentation](https://www.ventoy.net/en/doc_start.html).
+
+_📢 Important Notes:_
+- ✅ Only the Ventoy CLI and Ventoy Web is currently supported in this project.
+- ❌ Ventoy GUI interface are NOT supported.
 
 ----
 
