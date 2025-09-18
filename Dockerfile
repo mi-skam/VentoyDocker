@@ -19,4 +19,8 @@ RUN wget https://github.com/ventoy/Ventoy/releases/download/v1.1.07/ventoy-1.1.0
 # This is where the Ventoy files are located
 WORKDIR /root/ventoy-1.1.07
 
+COPY ./scripts/ /root/ventoy-1.1.07/scripts/  
+
+RUN chmod +x /root/ventoy-1.1.07/scripts/cleanup.sh  /root/ventoy-1.1.07/scripts/mount.sh 
+
 CMD ["bash"]
