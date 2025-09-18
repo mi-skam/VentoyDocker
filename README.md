@@ -54,11 +54,11 @@ VentoyDocker is a project that provides a Docker container allowing you to run [
     - The `-d` option specifies the USB drive mount path to use with Ventoy.
    - Replace `<your-usb-drive-mount-path>` with the mount path to your USB drive.
 
-   You can check the available USB drives and their mount path by running:
+   - You can check the available USB drives and their mount path by running:
    ```bash
    diskutil list
    ```
-   Output of the Above command is like this:
+   - Output of the Above command is like this:
    ```bash
    /dev/disk0 (internal, physical):
    #:                       TYPE NAME                    SIZE       IDENTIFIER
@@ -91,14 +91,31 @@ VentoyDocker is a project that provides a Docker container allowing you to run [
    ```
    Choose the mount path of the USB drive in which you want to install ventoy. For example; I want to install ventoy in disk5 USB drive, then the mount path of that USB drive will be `/dev/disk5`
 
-   The default port for NBD is `10809`, but you can specify a different port using the `-p` option:
+   __Note:__ The default port for NBD is `10809`, but you can specify a different port using the `-p` option:
+   
+   - Example: with defualt port for NBD: `1089`
+
    ```bash
-   ./StartNbd.sh -d <your-usb-drive-mount-path> -p <your-port>
+   ./StartNbd.sh -d /dev/disk5
    ```
+
+   - Example: with custom port for NBD: `1088`
+
+   ```bash
+   ./StartNbd.sh -d /dev/disk5 -p 1088
+   ```
+
 5. Start the Ventoy Docker container:
    ```bash
    ./StartVentoy.sh
    ```  
+
+   __Note:__ You can specify the port to expose for VentoyWeb when starting the Ventoy Docker container which is Default to `24680`. To specify custom port apart from `24680` you can use `-p` flag.
+
+   Example:
+   ```bash
+   ./StartVentoy,sh -p 8080
+   ```
 
 6. Steps after starting the container:
    - The script will prompt you to connect to the NBD server from your host machine.
@@ -129,6 +146,18 @@ _📢 Important Notes:_
 - ❌ Ventoy GUI interface are NOT supported.
 
 ----
+
+### FAQ
+
+1. How to run the VentoyWeb after staring the VentoyDocker container ?
+- You can run the VentoyWeb using the following command in the docker container
+```bash
+./VentoyWeb.sh -H 0.0.0.0
+```
+
+and now you can access the ventoyweb interface on your hostmachine by going to `0.0.0.0:24680` in your browser.
+
+__Note__: You can also specify which port to expose in the host machine; see the docs [here](#installation)
 
 ### Contributing via GitHub
 
