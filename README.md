@@ -18,9 +18,9 @@ VentoyDocker is a project that provides a Docker container allowing you to run [
 
 -----
 
-## Demo
+## Tutorial
 
-[![VentoyDocker Demo](https://img.youtube.com/vi/lMra8McfwAk/0.jpg)](https://www.youtube.com/watch?v=lMra8McfwAk)
+[![VentoyDocker Demo](https://i.imgflip.com/a6j2jf.jpg)](https://youtu.be/70btP4Nli1w?si=pVojLN-cwY4qmqzo)
 
 -----
 
