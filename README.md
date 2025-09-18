@@ -112,7 +112,7 @@ VentoyDocker is a project that provides a Docker container allowing you to run [
 
    __Note:__ You can specify the port to expose for VentoyWeb when starting the Ventoy Docker container which is Default to `24680`. To specify custom port apart from `24680` you can use `-p` flag.
 
-   Example:
+   - Example:
    ```bash
    ./StartVentoy,sh -p 8080
    ```
