@@ -94,7 +94,7 @@ VentoyDocker is a project that provides a Docker container allowing you to run [
 
    __Note:__ The default port for NBD is `10809`, but you can specify a different port using the `-p` option:
    
-   - Example: with defualt port for NBD: `1089`
+   - Example: with defualt port for NBD: `10809`
 
    ```bash
    ./StartNbd.sh -d /dev/disk5
@@ -116,7 +116,7 @@ VentoyDocker is a project that provides a Docker container allowing you to run [
    - Example:
 
    ```bash
-   ./StartVentoy,sh -p 8080
+   ./StartVentoy.sh -p 8080
    ```
 
 6. Steps after starting the container:
@@ -128,17 +128,17 @@ VentoyDocker is a project that provides a Docker container allowing you to run [
    - Replace `<your-nbd-port>` with the port you specified (default is `10809`) and `<your-nbd-device>` with the device path (e.g., `/dev/nbd0`).
    - Optionally you can run the following script to connect to the NBD server from your host machine
      ```bash
-     ./script/mount.sh
+     ./scrips/mount.sh
      ```
 
 
    - Before exiting the container, cleanly detach NBD, Clean Detach Procedure is essential to avoid data loss: 
         ```bash
-        nbd-client -d <your-nbd-port>
+        nbd-client -d <your-nbd-device>
         ```
    - Optionally you can run the following script cleanly detach NBD
         ```bash
-         ./script/cleanup.sh
+         ./scripts/cleanup.sh
         ```
 
 Now you can easily use Ventoy scripts to create bootable USB drives or disk images. For more information on how to use Ventoy scripts, refer to the [Ventoy documentation](https://www.ventoy.net/en/doc_start.html).
@@ -151,7 +151,7 @@ _📢 Important Notes:_
 
 ### FAQ
 
-1. How to run the VentoyWeb after staring the VentoyDocker container ?
+1. How to run the VentoyWeb after starting the VentoyDocker container ?
 - You can run the VentoyWeb using the following command in the docker container
 ```bash
 ./VentoyWeb.sh -H 0.0.0.0
