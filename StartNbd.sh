@@ -10,10 +10,10 @@ usage() {
 🚀 StartNbd.sh - Start qemu-nbd on macOS to export a block device over TCP
 
 Usage:
-  sudo $0 -d <device> [-p <port>]
+  sudo $0 -d <your-usb-drive-mount-path> [-p <port>]
 
 Options:
-  -d DEVICE    Block device path to export (e.g., /dev/disk3)   [REQUIRED]
+  -d DEVICE    your usb drive mount path to export (e.g., /dev/disk3)   [REQUIRED]
   -p PORT      TCP port to listen on (default: 10809)           [OPTIONAL]
 
 Example:
@@ -22,8 +22,6 @@ Example:
 Notes:
   • This script must be run as root.
   • The device will be unmounted before starting qemu-nbd.
-  • To disconnect, use:
-        nbd-client -d /dev/nbd0
 
 EOF
     exit 1
