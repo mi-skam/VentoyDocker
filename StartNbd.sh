@@ -3,6 +3,11 @@
 # Exit immediately if a command exits with a non-zero status
 set -euo pipefail
 
+# Load environment variables from .env file
+if [[ -f "$(dirname "$0")/.env" ]]; then
+    export $(grep -v '^#' "$(dirname "$0")/.env" | xargs)
+fi
+
 # Function to display usage information
 usage() {
     cat <<EOF
@@ -14,7 +19,7 @@ Usage:
 
 Options:
   -d DEVICE    your usb drive mount path to export (e.g., /dev/disk3)   [REQUIRED]
-  -p PORT      TCP port to listen on (default: 10809)           [OPTIONAL]
+  -p PORT      TCP port to listen on (default: ${NBD_PORT:-10809})           [OPTIONAL]
 
 Example:
   sudo $0 -d /dev/disk3 -p 10809
@@ -72,8 +77,8 @@ if ! command -v docker &>/dev/null; then
     exit 1
 fi
 
-# Defaults
-PORT="10809"
+# Defaults (from .env or fallback)
+PORT="${NBD_PORT:-10809}"
 DEVICE=""
 
 # Parse options

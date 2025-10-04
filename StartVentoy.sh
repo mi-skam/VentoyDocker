@@ -3,6 +3,11 @@
 # Exit immediately if a command exits with a non-zero status
 set -euo pipefail
 
+# Load environment variables from .env file
+if [[ -f "$(dirname "$0")/.env" ]]; then
+    export $(grep -v '^#' "$(dirname "$0")/.env" | xargs)
+fi
+
 # Function to display usage information
 usage() {
     cat <<EOF
@@ -13,7 +18,7 @@ Usage:
   $0 [-p <port>]
 
 Options:
-  -p PORT      TCP port for ventoy web (default: 24680) [OPTIONAL]
+  -p PORT      TCP port for ventoy web (default: ${VENTOY_WEB_PORT:-24680}) [OPTIONAL]
 
 Example:
   ./$0 -p 8080
@@ -59,9 +64,15 @@ if ! command -v docker &>/dev/null; then
 fi
 
 # Build the Docker image if it is not already built
-if ! docker image inspect ventoy-docker:1.1.07 &>/dev/null; then
-    echo "Docker image 'ventoy-docker' not found. Building the image..."
-    docker build -t ventoy-docker:1.1.07 .
+DOCKER_IMAGE_TAG="${DOCKER_IMAGE_NAME:-ventoy-docker}:${VENTOY_VERSION:-1.1.07}"
+if ! docker image inspect "$DOCKER_IMAGE_TAG" &>/dev/null; then
+    echo "Docker image '$DOCKER_IMAGE_TAG' not found. Building the image..."
+    docker build \
+        --build-arg UBUNTU_VERSION="${UBUNTU_VERSION:-latest}" \
+        --build-arg VENTOY_VERSION="${VENTOY_VERSION:-1.1.07}" \
+        --build-arg VENTOY_DOWNLOAD_URL="${VENTOY_DOWNLOAD_URL}" \
+        --build-arg VENTOY_WORK_DIR="${VENTOY_WORK_DIR:-/root/ventoy-1.1.07}" \
+        -t "$DOCKER_IMAGE_TAG" .
 fi
 
 # Check if the build was successful
@@ -70,8 +81,8 @@ if [[ $? -ne 0 ]]; then
     exit 1
 fi
 
-# Defaults
-PORT="24680"
+# Defaults (from .env or fallback)
+PORT="${VENTOY_WEB_PORT:-24680}"
 
 # Parse options
 while getopts ":p:" opt; do
@@ -88,20 +99,20 @@ done
 # Run the Docker container
 echo "Running the Docker container..."
 docker run -it --rm \
-    --name ventoy-docker \
+    --name "${DOCKER_CONTAINER_NAME:-ventoy-docker}" \
     --privileged \
-    -p "${PORT}":24680 \
-    ventoy-docker:1.1.07 \
+    -p "${PORT}":${VENTOY_WEB_PORT:-24680} \
+    "$DOCKER_IMAGE_TAG" \
     bash \
     -c "
 echo ''
 echo '=============================================================='
 echo '🔗  To connect to NBD from your host, run the following:'
 echo ''
-echo '    nbd-client host.docker.internal <nbd-port> <nbd-device>'
+echo '    nbd-client ${NBD_HOST:-host.docker.internal} <nbd-port> <nbd-device>'
 echo ''
 echo '🟢 Example:'
-echo '    nbd-client host.docker.internal 10809 /dev/nbd0'
+echo '    nbd-client ${NBD_HOST:-host.docker.internal} ${NBD_PORT:-10809} ${NBD_DEVICE:-/dev/nbd0}'
 echo ''
 echo '📁 Optionally you can run the following script to connect to NBD from your host'
 echo ''
@@ -109,7 +120,7 @@ echo '    ./scripts/mount.sh'
 echo ''
 echo '⚠️   Before exiting the container, cleanly detach NBD:'
 echo ''
-echo '    nbd-client -d /dev/nbd0'
+echo '    nbd-client -d ${NBD_DEVICE:-/dev/nbd0}'
 echo ''
 echo '🟢 Clean Detach Procedure is essential to avoid data loss.'
 echo ''
