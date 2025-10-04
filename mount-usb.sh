@@ -9,7 +9,7 @@ set -euo pipefail
 # Get the script directory and source common functions
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck disable=SC1091
-source "${SCRIPT_DIR}/../common.sh"
+source "${SCRIPT_DIR}/scripts/common.sh"
 
 # Function to display usage information
 usage() {

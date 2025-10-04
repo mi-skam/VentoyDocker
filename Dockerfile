@@ -1,9 +1,13 @@
 # Build arguments for configuration
 ARG UBUNTU_VERSION=latest
-ARG VENTOY_VERSION=1.1.07
-ARG VENTOY_DOWNLOAD_URL=https://github.com/ventoy/Ventoy/releases/download/v${VENTOY_VERSION}/ventoy-${VENTOY_VERSION}-linux.tar.gz
+ARG VENTOY_VERSION
+ARG VENTOY_DOWNLOAD_URL
 
 FROM ubuntu:${UBUNTU_VERSION}
+
+# Re-declare ARGs after FROM to make them available in build stages
+ARG VENTOY_VERSION
+ARG VENTOY_DOWNLOAD_URL
 
 # Install system dependencies
 RUN apt update && apt install -y \
@@ -31,4 +35,10 @@ COPY ./scripts/ /root/ventoy-${VENTOY_VERSION}/scripts/
 # Make all scripts executable
 RUN find /root/ventoy-${VENTOY_VERSION}/scripts -type f -name "*.sh" -exec chmod +x {} \;
 
-CMD ["bash"]
+# Create symlink for easier entrypoint access
+RUN ln -s /root/ventoy-${VENTOY_VERSION}/scripts/container/entrypoint.sh /entrypoint.sh
+
+# Expose VentoyWeb port
+EXPOSE 24680
+
+ENTRYPOINT ["/entrypoint.sh"]
