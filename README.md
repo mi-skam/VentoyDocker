@@ -39,15 +39,19 @@ VentoyDocker is a project that provides a Docker container allowing you to run [
 2. Navigate to the project directory:
    ```bash
    cd VentoyDocker
-   ``` 
-3. Make the `StartVentoy.sh` and `StartNbd.sh` scripts executable:
+   ```
+3. (Optional) Configure default values:
    ```bash
-   chmod +x StartVentoy.sh
-   chmod +x StartNbd.sh
-   ``` 
-4. Start the NBD server:
+   cp .env.example .env
+   # Edit .env to customize Ventoy version, ports, etc.
+   ```
+4. Make the scripts executable:
    ```bash
-   sudo ./StartNbd.sh -d <your-usb-drive-mount-path>
+   chmod +x scripts/host/*.sh
+   ```
+5. Start the NBD server:
+   ```bash
+   sudo ./scripts/host/start-nbd.sh -d <your-usb-drive-mount-path>
    ```
 
     - Note: You need to run this command with `sudo` to allow access to the disk image or USB drive.
@@ -94,21 +98,21 @@ VentoyDocker is a project that provides a Docker container allowing you to run [
 
    __Note:__ The default port for NBD is `10809`, but you can specify a different port using the `-p` option:
    
-   - Example: with defualt port for NBD: `10809`
+   - Example: with default port for NBD: `10809`
 
    ```bash
-   ./StartNbd.sh -d /dev/disk5
+   sudo ./scripts/host/start-nbd.sh -d /dev/disk5
    ```
 
    - Example: with custom port for NBD: `1088`
 
    ```bash
-   ./StartNbd.sh -d /dev/disk5 -p 1088
+   sudo ./scripts/host/start-nbd.sh -d /dev/disk5 -p 1088
    ```
 
-5. Start the Ventoy Docker container:
+6. Start the Ventoy Docker container:
    ```bash
-   ./StartVentoy.sh
+   ./scripts/host/start-ventoy.sh
    ```  
 
    __Note:__ You can specify the port to expose for VentoyWeb when starting the Ventoy Docker container which is Default to `24680`. To specify custom port apart from `24680` you can use `-p` flag.
@@ -116,29 +120,28 @@ VentoyDocker is a project that provides a Docker container allowing you to run [
    - Example:
 
    ```bash
-   ./StartVentoy.sh -p 8080
+   ./scripts/host/start-ventoy.sh -p 8080
    ```
 
-6. Steps after starting the container:
-   - The script will prompt you to connect to the NBD server from your host machine.
-   - Use the command provided to connect to the NBD server:
+7. Steps after starting the container:
+   - The script will show you instructions to connect to the NBD server.
+   - Inside the container, run the mount script to connect to the NBD server:
+     ```bash
+     ./scripts/container/mount.sh
+     ```
+   - Or manually with:
      ```bash
      nbd-client host.docker.internal <your-nbd-port> <your-nbd-device>
      ```
    - Replace `<your-nbd-port>` with the port you specified (default is `10809`) and `<your-nbd-device>` with the device path (e.g., `/dev/nbd0`).
-   - Optionally you can run the following script to connect to the NBD server from your host machine
-     ```bash
-     ./scrips/mount.sh
-     ```
 
-
-   - Before exiting the container, cleanly detach NBD, Clean Detach Procedure is essential to avoid data loss: 
+   - Before exiting the container, cleanly detach NBD (Clean Detach Procedure is essential to avoid data loss):
+        ```bash
+        ./scripts/container/cleanup.sh
+        ```
+   - Or manually with:
         ```bash
         nbd-client -d <your-nbd-device>
-        ```
-   - Optionally you can run the following script cleanly detach NBD
-        ```bash
-         ./scripts/cleanup.sh
         ```
 
 Now you can easily use Ventoy scripts to create bootable USB drives or disk images. For more information on how to use Ventoy scripts, refer to the [Ventoy documentation](https://www.ventoy.net/en/doc_start.html).
